@@ -1,0 +1,8 @@
+Run
+    pip install virtualenv
+Restart console to apply env variables
+
+Run inside this folder
+    virtualenv env
+    .\activate
+    pip install -r .\requirements.txt
