@@ -42,7 +42,7 @@ def storeClearText(storage_type):
 
 @app.route('/securestorage/<storage_type>/<token>', methods=['GET'])
 def getClearText(storage_type, token):
-    if storage_type:
+    if is_valid_storage_type(storage_type):
         if token:
             with open_db() as db:
                 clear_text = db.get(token)
@@ -58,8 +58,8 @@ def getClearText(storage_type, token):
 
 
 def open_db():
-    return shelve.open('.\storage\db')
+    return shelve.open(r'.\storage\db')
 
 
 def is_valid_storage_type(storage_type):
-    return storage_type.lower() == 'cardNumber'
+    return storage_type.lower() == 'cardnumber'
