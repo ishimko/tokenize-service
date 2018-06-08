@@ -50,7 +50,7 @@ def getClearText(storage_type, token):
                     response = { 'clearText': clear_text }
                     return jsonify(response), 200
                 else:
-                    return BAD_REQUEST
+                    return NOT_FOUND
         else:
             return BAD_REQUEST
     else:
