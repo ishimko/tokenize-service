@@ -3,8 +3,13 @@ from flask import Flask
 from flask import jsonify
 import shelve
 import uuid
+from flask_basicauth import BasicAuth
 
 app = Flask('tokenize-service')
+
+app.config['BASIC_AUTH_USERNAME'] = 'user'
+app.config['BASIC_AUTH_PASSWORD'] = 'password'
+basic_auth = BasicAuth(app)
 
 BAD_REQUEST = '', 400
 NOT_FOUND = '', 404
@@ -21,6 +26,7 @@ def initialize():
 
 
 @app.route('/securestorage/<storage_type>', methods=['POST'])
+@basic_auth.required
 def storeClearText(storage_type):
     if is_valid_storage_type(storage_type):
         if request.json:
@@ -41,6 +47,7 @@ def storeClearText(storage_type):
 
 
 @app.route('/securestorage/<storage_type>/<token>', methods=['GET'])
+@basic_auth.required
 def getClearText(storage_type, token):
     if is_valid_storage_type(storage_type):
         if token:
